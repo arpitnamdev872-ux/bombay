@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaStar, FaTimes, FaPen, FaTrash } from "react-icons/fa";
+import { FaStar, FaTimes, FaPen, FaTrash, FaCheck, FaBan } from "react-icons/fa";
 import { AdminContext } from "../context/AdminContext";
 
 const Testimonials = () => {
@@ -47,30 +47,53 @@ const Testimonials = () => {
   ];
 
   const [reviews, setReviews] = useState([]);
+  const [pendingReviews, setPendingReviews] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newReview, setNewReview] = useState({ name: "", text: "", rating: 5 });
   const { isAdmin } = useContext(AdminContext);
 
   // Load reviews from local storage on first render
   useEffect(() => {
-    const savedReviews = localStorage.getItem("bombay_reviews");
-    if (savedReviews) {
-      setReviews(JSON.parse(savedReviews));
-    } else {
-      setReviews(defaultTestimonials);
-      localStorage.setItem("bombay_reviews", JSON.stringify(defaultTestimonials));
-    }
+    const savedApproved = localStorage.getItem("bombay_reviews_approved");
+    setReviews(savedApproved ? JSON.parse(savedApproved) : defaultTestimonials);
+
+    const savedPending = localStorage.getItem("bombay_reviews_pending");
+    setPendingReviews(savedPending ? JSON.parse(savedPending) : []);
   }, []);
 
   // Handle review submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newReview.name.trim() && newReview.text.trim()) {
-      const updatedReviews = [newReview, ...reviews];
-      setReviews(updatedReviews);
-      localStorage.setItem("bombay_reviews", JSON.stringify(updatedReviews));
+      const updatedPending = [newReview, ...pendingReviews];
+      setPendingReviews(updatedPending);
+      localStorage.setItem("bombay_reviews_pending", JSON.stringify(updatedPending));
       setNewReview({ name: "", text: "", rating: 5 });
       setIsModalOpen(false);
+    }
+  };
+
+  // Handle review acceptance (Admin Only)
+  const handleAccept = (indexToAccept) => {
+    const reviewToAccept = pendingReviews[indexToAccept];
+    
+    // Add to approved reviews
+    const updatedApproved = [reviewToAccept, ...reviews];
+    setReviews(updatedApproved);
+    localStorage.setItem("bombay_reviews_approved", JSON.stringify(updatedApproved));
+
+    // Remove from pending reviews
+    const updatedPending = pendingReviews.filter((_, idx) => idx !== indexToAccept);
+    setPendingReviews(updatedPending);
+    localStorage.setItem("bombay_reviews_pending", JSON.stringify(updatedPending));
+  };
+
+  // Handle review rejection (Admin Only)
+  const handleReject = (indexToReject) => {
+    if (window.confirm("Are you sure you want to reject this review? It will be permanently deleted.")) {
+      const updatedPending = pendingReviews.filter((_, idx) => idx !== indexToReject);
+      setPendingReviews(updatedPending);
+      localStorage.setItem("bombay_reviews_pending", JSON.stringify(updatedPending));
     }
   };
 
@@ -79,7 +102,7 @@ const Testimonials = () => {
     if (window.confirm("Are you sure you want to delete this review?")) {
       const updatedReviews = reviews.filter((_, idx) => idx !== indexToDelete);
       setReviews(updatedReviews);
-      localStorage.setItem("bombay_reviews", JSON.stringify(updatedReviews));
+      localStorage.setItem("bombay_reviews_approved", JSON.stringify(updatedReviews));
     }
   };
 
@@ -110,12 +133,45 @@ const Testimonials = () => {
           </button>
         </div>
       </div>
+      
+      {/* Pending Reviews for Admin */}
+      {isAdmin && pendingReviews.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 relative z-10 mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-center text-white font-serif mb-4">Pending Reviews</h3>
+            <div className="w-16 h-1 bg-[#D4A017] mx-auto mb-8 rounded-full"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {pendingReviews.map((testimonial, idx) => (
+                    <div key={`pending-${idx}`} className="relative bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-center gap-1 mb-4">
+                                {[...Array(5)].map((_, i) => (
+                                <FaStar key={i} className={`text-lg ${i < testimonial.rating ? 'text-[#D4A017]' : 'text-gray-400'}`} />
+                                ))}
+                            </div>
+                            <p className="text-gray-200 mb-6 text-lg leading-relaxed italic">"{testimonial.text}"</p>
+                        </div>
+                        <div>
+                            <p className="font-bold text-white text-right border-t border-white/10 pt-4 mb-4">— {testimonial.name}</p>
+                            <div className="flex justify-end gap-4">
+                                <button onClick={() => handleAccept(idx)} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                    <FaCheck /> Accept
+                                </button>
+                                <button onClick={() => handleReject(idx)} className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                                    <FaBan /> Reject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      )}
 
       {/* Marquee Animation Container (Aligned to Navbar) */}
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Added fade effect at edges for smooth scrolling visuals */}
         <div className="overflow-hidden relative w-full pb-8 [mask-image:_linear-gradient(to_right,transparent_0,_black_40px,_black_calc(100%-40px),transparent_100%)]">
-          <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused] py-2 cursor-grab active:cursor-grabbing">
+          <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused] py-2">
             {/* Render 2 sets of testimonials for seamless looping */}
             {[...reviews, ...reviews].map((testimonial, idx) => {
               const originalIdx = idx % reviews.length;

@@ -23,11 +23,15 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import { AdminProvider } from "./context/AdminContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <AdminProvider>
       <BrowserRouter>
+        {/* This component will scroll to top on every page change */}
+        <ScrollToTop />
+
         {/* Top Navbar - Always Shown */}
         <Navbar />
 

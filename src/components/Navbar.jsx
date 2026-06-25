@@ -24,26 +24,26 @@ const Navbar = () => {
       <div className="border-b border-[#D4A017]">
         <div className="max-w-7xl mx-auto px-4 py-1 flex flex-col md:flex-row items-center justify-between text-white text-xs md:text-sm gap-2 md:gap-0">
           {/* Location & Contact */}
-          <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
-            <a href="https://maps.google.com/?q=Kotwaran+ka+pura,+chilla+mod,+churaha,+opp.+hanuman+mandir,+new,+Jasra,+Uttar+Pradesh+212107" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-[#D4A017] transition-colors max-w-[130px] sm:max-w-[250px] lg:max-w-[450px]" title="Kotwaran ka pura, chilla mod, churaha, opp. hanuman mandir, new, Jasra, Uttar Pradesh 212107">
-              <FaMapMarkerAlt className="text-[#D4A017] shrink-0" />
-              <span className="truncate">Kotwaran ka pura, chilla mod, churaha, opp. hanuman mandir, new, Jasra, Uttar Pradesh 212107</span>
+          <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
+            <a href="https://maps.google.com/?q=Kotwaran+ka+pura,+chilla+mod,+churaha,+opp.+hanuman+mandir,+new,+Jasra,+Uttar+Pradesh+212107" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-yellow-200 hover:text-white transition-colors max-w-[130px] sm:max-w-[250px] lg:max-w-[450px]" title="Kotwaran ka pura, chilla mod, churaha, opp. hanuman mandir, Jasra, Uttar Pradesh 212107">
+              <FaMapMarkerAlt className="text-yellow-400 shrink-0" />
+              <span className="truncate">Kotwaran ka pura, Jasra, Prayagraj</span>
             </a>
-            <a href="tel:+919082174499" className="flex items-center gap-1.5 hover:text-[#D4A017] transition-colors whitespace-nowrap">
-              <FaPhoneAlt className="text-[#D4A017] shrink-0" />
+            <a href="tel:+919082174499" className="flex items-center gap-1.5 text-yellow-200 hover:text-white transition-colors whitespace-nowrap">
+              <FaPhoneAlt className="text-yellow-400 shrink-0" />
               +91 90821 74499
             </a>
           </div>
           
           {/* Social Icons */}
           <div className="flex items-center gap-4">
-            <a href="https://www.instagram.com/bombay_fashion512" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4A017] transition-colors text-base md:text-lg">
+            <a href="https://www.instagram.com/bombay_fashion512" target="_blank" rel="noopener noreferrer" className="text-pink-400 transition-all duration-300 hover:text-pink-300 hover:drop-shadow-[0_0_5px_#ec4899] text-base md:text-lg">
               <FaInstagram />
             </a>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4A017] transition-colors text-base md:text-lg">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 transition-all duration-300 hover:text-blue-300 hover:drop-shadow-[0_0_5px_#60a5fa] text-base md:text-lg">
               <FaFacebook />
             </a>
-            <a href="https://wa.me/919082174499" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4A017] transition-colors text-base md:text-lg">
+            <a href="https://wa.me/919082174499" target="_blank" rel="noopener noreferrer" className="text-green-400 transition-all duration-300 hover:text-green-300 hover:drop-shadow-[0_0_5px_#4ade80] text-base md:text-lg">
               <FaWhatsapp />
             </a>
           </div>
