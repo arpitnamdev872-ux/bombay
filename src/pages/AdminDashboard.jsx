@@ -61,7 +61,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Top Navbar */}
+      {/* Top Navbar for Admin */}
       <nav className="bg-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -74,8 +74,8 @@ const AdminDashboard = () => {
             <h1 className="text-2xl font-bold text-[#071952]">Admin Panel</h1>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-gray-700">
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="hidden sm:inline text-gray-700">
               Welcome,{" "}
               <span className="font-bold text-[#D4A017]">
                 {adminUser?.username}
@@ -90,13 +90,13 @@ const AdminDashboard = () => {
           </div>
         </div>
       </nav>
-
-      <div className="flex">
+      
+      <div className="flex relative">
         {/* Sidebar */}
         <aside
-          className={`${
-            sidebarOpen ? "block" : "hidden"
-          } md:block w-full md:w-64 bg-[#071952] text-white p-6 transition-all duration-300`}
+          className={`fixed md:relative top-0 left-0 h-full z-40 bg-[#071952] text-white p-6 transition-transform duration-300 ease-in-out ${
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 md:w-64 w-64`}
         >
           <div className="mb-8">
             <Link to="/" className="text-[#D4A017] font-bold text-lg hover:underline">
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 md:p-8">
+        <main className="flex-1 p-4 md:p-8 md:ml-0 transition-all duration-300">
           {/* Welcome Section */}
           <div className="bg-gradient-to-r from-[#071952] to-[#0b2a4b] text-white rounded-lg p-8 mb-8">
             <h2 className="text-3xl font-bold mb-2">Dashboard</h2>

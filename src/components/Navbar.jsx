@@ -77,7 +77,7 @@ const Navbar = () => {
           <button onClick={() => setShopModalOpen(true)} className="hidden md:flex bg-[#D4A017] text-[#071952] px-4 lg:px-6 py-2 rounded-full font-bold hover:bg-white transition-colors duration-300 shadow-md hover:shadow-lg text-sm lg:text-base">
             Visit Shop
           </button>
-          <Link to="/admin/login" title="Admin Panel" className="hidden sm:flex bg-[#071952] hover:bg-[#D4A017] text-[#D4A017] hover:text-[#071952] border border-[#D4A017] w-10 h-10 lg:w-11 lg:h-11 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg items-center justify-center">
+          <Link to="/admin/login" title="Admin Panel" className="flex bg-[#071952] hover:bg-[#D4A017] text-[#D4A017] hover:text-[#071952] border border-[#D4A017] w-10 h-10 lg:w-11 lg:h-11 rounded-full font-bold transition-all duration-300 shadow-md hover:shadow-lg items-center justify-center">
             <FaUserShield className="text-lg" />
           </Link>
 
@@ -94,7 +94,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div
         className={`lg:hidden bg-[#071952] text-white flex flex-col gap-4 px-6 text-lg overflow-hidden transition-all duration-300 ease-in-out ${
-          menuOpen ? "max-h-[500px] py-6 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
+          menuOpen ? "max-h-[550px] py-6 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
         }`}
       >
         <NavLink to="/" onClick={() => setMenuOpen(false)} className={navLinkStyle}>Home</NavLink>
@@ -104,6 +104,9 @@ const Navbar = () => {
         <NavLink to="/ladies-wear" onClick={() => setMenuOpen(false)} className={navLinkStyle}>Ladies Wear</NavLink>
         <NavLink to="/gallery" onClick={() => setMenuOpen(false)} className={navLinkStyle}>Gallery</NavLink>
         <NavLink to="/contact" onClick={() => setMenuOpen(false)} className={navLinkStyle}>Contact</NavLink>
+        <NavLink to="/admin/login" onClick={() => setMenuOpen(false)} className={`${navLinkStyle} mt-2`}>
+          <FaUserShield className="inline mr-2" /> Admin Panel
+        </NavLink>
         <button onClick={() => { setMenuOpen(false); setShopModalOpen(true); }} className="bg-[#D4A017] text-[#071952] text-center px-6 py-2 mt-2 rounded-full font-bold hover:bg-white transition-colors duration-300 shadow-md">
           Visit Shop
         </button>
